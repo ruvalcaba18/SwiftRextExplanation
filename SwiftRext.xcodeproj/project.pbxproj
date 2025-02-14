@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B22DDEE92D4C22060031DADB /* CombineRex in Frameworks */ = {isa = PBXBuildFile; productRef = B22DDEE82D4C22060031DADB /* CombineRex */; };
+		B22DDEED2D4C22060031DADB /* ReactiveSwiftRex in Frameworks */ = {isa = PBXBuildFile; productRef = B22DDEEC2D4C22060031DADB /* ReactiveSwiftRex */; };
+		B22DDEF12D4C22060031DADB /* RxSwiftRex in Frameworks */ = {isa = PBXBuildFile; productRef = B22DDEF02D4C22060031DADB /* RxSwiftRex */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		B22DDECB2D4C219C0031DADB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +58,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B22DDEE92D4C22060031DADB /* CombineRex in Frameworks */,
+				B22DDEED2D4C22060031DADB /* ReactiveSwiftRex in Frameworks */,
+				B22DDEF12D4C22060031DADB /* RxSwiftRex in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +121,9 @@
 			);
 			name = SwiftRext;
 			packageProductDependencies = (
+				B22DDEE82D4C22060031DADB /* CombineRex */,
+				B22DDEEC2D4C22060031DADB /* ReactiveSwiftRex */,
+				B22DDEF02D4C22060031DADB /* RxSwiftRex */,
 			);
 			productName = SwiftRext;
 			productReference = B22DDEBA2D4C219B0031DADB /* SwiftRext.app */;
@@ -195,6 +207,9 @@
 			);
 			mainGroup = B22DDEB12D4C219B0031DADB;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B22DDEE72D4C22060031DADB /* XCRemoteSwiftPackageReference "SwiftRex" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B22DDEBB2D4C219B0031DADB /* Products */;
 			projectDirPath = "";
@@ -558,6 +573,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B22DDEE72D4C22060031DADB /* XCRemoteSwiftPackageReference "SwiftRex" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftRex/SwiftRex";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.12;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B22DDEE82D4C22060031DADB /* CombineRex */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B22DDEE72D4C22060031DADB /* XCRemoteSwiftPackageReference "SwiftRex" */;
+			productName = CombineRex;
+		};
+		B22DDEEC2D4C22060031DADB /* ReactiveSwiftRex */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B22DDEE72D4C22060031DADB /* XCRemoteSwiftPackageReference "SwiftRex" */;
+			productName = ReactiveSwiftRex;
+		};
+		B22DDEF02D4C22060031DADB /* RxSwiftRex */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B22DDEE72D4C22060031DADB /* XCRemoteSwiftPackageReference "SwiftRex" */;
+			productName = RxSwiftRex;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B22DDEB22D4C219B0031DADB /* Project object */;
 }
