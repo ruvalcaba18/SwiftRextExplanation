@@ -46,26 +46,17 @@ extension PokedexView {
     @ViewBuilder
     func pokedexRow(pokemonToDisplay: PokemonDetail) ->  some View {
         
-        VStack(alignment: .center) {
-            
-            Text(pokemonToDisplay.name ?? "Unknown")
-                .font(.title.smallCaps())
-                .foregroundStyle(.white)
-            
-            pokemonImageDisplayer(pokemonToDisplay.sprites?.frontDefault)
-            pokemonTypesToDisplay(pokemonToDisplay.types ?? [] )
+        NavigationLink {
+            PokemonDetails(pokemonDetail: pokemonToDisplay, normalViewModel: normalViewModel)
+        } label: {
+            VStack {
+                Text(pokemonToDisplay.name ?? "Unknown")
+                    .font(.title.smallCaps())
+                    .foregroundStyle(.white)
+                pokemonImageDisplayer(pokemonToDisplay.sprites?.frontDefault)
+                pokemonTypesToDisplay(pokemonToDisplay.types ?? [])
+            }
         }
-        .onTapGesture {
-//                    viewModelWithEnum.dispatch(.navigateTo(.details))
-            normalViewModel.moveToDetails(withDetail: pokemonToDisplay)
-        }
-        .background(
-            NavigationLink(isActive: normalViewModel.isMainViewPresented == .main ? .constant(false) : .constant(true) , destination: {
-                PokemonDetails(pokemonDetail: pokemonToDisplay, normalViewModel: normalViewModel)
-            }, label: {
-                EmptyView()
-            })
-        )
     }
     
     @ViewBuilder
@@ -73,7 +64,7 @@ extension PokedexView {
         
         if let urlString = imgString {
             
-            if let imageData = normalViewModel.imageCache[urlString],
+            if let imageData = normalViewModel.imageCache.getObject(forKey: urlString as NSString),
                let uiImage = UIImage(data: imageData) {
                 
                 ZStack {
@@ -85,6 +76,8 @@ extension PokedexView {
                         .resizable()
                         .scaledToFit()
                 }
+                .frame(width: UIScreen.main.bounds.width,
+                       height: UIScreen.main.bounds.width * 0.45)
                 .padding([.horizontal,.vertical],10)
                 
             } else {
@@ -98,9 +91,15 @@ extension PokedexView {
     
     @ViewBuilder
     private func pokemonTypesToDisplay(_ typesEntry: [TypeEntry]) -> some View {
+        VStack {
+            Text("Pokemon Type: ")
+                .font(.title3
+                    .smallCaps())
+                .foregroundStyle(.white)
             HStack {
                 ForEach(typesEntry,id: \.id) { type in
                     PokemonTypePill(type: type)
+                }
             }
         }
     }

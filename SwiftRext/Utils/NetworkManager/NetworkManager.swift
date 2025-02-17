@@ -55,7 +55,7 @@ final class NetworkManager {
         }
     }
     
-    func fetch(_ imgURL: String) async throws -> Data? {
+    func fetchPokemonImages(_ imgURL: String) async throws -> Data? {
         
         let cacheKey = NSString(string: imgURL)
         
@@ -79,7 +79,22 @@ final class NetworkManager {
         }catch {
             throw PokemonError.badResponse
         }
-        return nil
+    }
+    
+    public func fetchPokemonAbility(withPokemonID ID: String?) async throws -> PokemonEffectData {
+        
+        guard let url = URL(string:"https://pokeapi.co/api/v2/ability/\(ID ?? "" )") else {
+            throw PokemonError.invalidURL
+        }
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            return try JSONDecoder().decode(PokemonEffectData.self, from: data)
+        }catch let error {
+            print(error)
+            throw PokemonError.unknown
+        }
+        
     }
     
     private func handleError() -> String {

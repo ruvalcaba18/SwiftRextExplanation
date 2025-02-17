@@ -16,8 +16,7 @@ final class NormalPokedexViewModel: ObservableObject {
     @Published var pokemonDetails = [PokemonDetail]()
     @Published var isLoading = false
     @Published var errorMessage: String? = nil
-    @Published var imageCache = [String: Data]()
-    @Published var isMainViewPresented: Screens = .main
+    @Published var imageCache: ImageCacheRetriever = .shared
     @Published var detailPokemonSelected: PokemonDetail?
     private var cancellables = Set<AnyCancellable>()
     private let store: ObservableViewModel<PokedexAction, PokedexAppState>
@@ -49,13 +48,6 @@ final class NormalPokedexViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        self.store.$state
-            .map { $0.screen}
-            .receive(on: RunLoop.main)
-            .sink { [weak self] screen in
-                self?.isMainViewPresented = screen
-            }.store(in: &cancellables)
-        
     }
     
     func fetchPokemons() {
@@ -64,9 +56,9 @@ final class NormalPokedexViewModel: ObservableObject {
     
     func fetchImage(for url: String) async {
         do {
-            let data = try await NetworkManager.shared.fetch(url)
+            var data = try await NetworkManager.shared.fetchPokemonImages(url)
             await MainActor.run {
-                imageCache[url] = data
+                data = imageCache.getObject(forKey: url as NSString)
                 objectWillChange.send()
             }
         } catch {
